@@ -54,28 +54,34 @@ def save_txt(file_name):
         with open(file_name, 'w') as file:
             file.write(whole_str)
             file.close()
-            print('except occured')
+            print('except occured - edited file')
     
     # convert json to text
     with open(file_name) as file:
         dic = json.load(file)
 
-        with open('data.txt', 'a') as write_file:
+        with open('corr.txt', 'a') as corr_file:
+            with open('incorr.txt', 'a') as incorr_file:
             # write every text to data.txt
-            for j in dic["data"]:
-                text = j["text"]
+                for j in dic["data"]:
+                    wrong_text = j["text"]
+                    text = j["text"]
 
-                # correct the text
-                index_add = 0
-                for edit in j["edits"][0][1]:
-                    if edit[2] is None:
-                        text = text[:edit[0]+index_add] + text[edit[1]+index_add:]
-                        index_add -= (edit[1] - edit[0])
-                    else:
-                        text = text[:edit[0]+index_add] + edit[2] + text[edit[1]+index_add:]
-                        index_add += len(edit[2]) - (edit[1] - edit[0])
-                
-                write_file.write(text + '\n')
+                    # correct the text
+                    index_add = 0
+                    for edit in j["edits"][0][1]:
+                        if edit[2] is None: # edit[2] is ""
+                            text = text[:edit[0]+index_add] + text[edit[1]+index_add:]
+                            index_add -= (edit[1] - edit[0])
+                        else:
+                            text = text[:edit[0]+index_add] + edit[2] + text[edit[1]+index_add:]
+                            index_add += len(edit[2]) - (edit[1] - edit[0])
+                    
+                    # split sentences with RETURN
+                    # wrong_text.replace('.', '.\n')
+
+                    corr_file.write(text + '\n')
+                    incorr_file.write(wrong_text + '\n')
     
     # add to checklist
     add_to_checklist(file_name)

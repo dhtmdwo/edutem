@@ -15,22 +15,23 @@ def save_txt(file_name):
      
     # convert lang8 to text
     with open(file_name) as file:
-        with open('data.txt', 'a') as write_file:
-            lines = file.readlines()
-            data = []
-            for line in lines:
-                words = line.split('\t')
+        with open('corr.txt', 'a') as corr_file:
+            with open('incorr.txt', 'a') as incorr_file:
+                lines = file.readlines()
+                corr_data, incorr_data = [], []
+                for line in lines:
+                    words = line.split('\t')
 
-                # no wrong word
-                if len(words) == 5:
-                    data.append(words[4].strip())
-                # has wrong word
-                elif len(words) >= 6:
-                    data.append(words[5].strip())
-            
+                    # has wrong word
+                    if len(words) >= 6:
+                        corr_data.append(words[5].strip())
+                        incorr_data.append(words[4].strip())
+                
 
-            for line in data:
-                write_file.write(line + '\n')
+                for line in corr_data:
+                    corr_file.write(line + '\n')
+                for line in incorr_data:
+                    incorr_file.write(line + '\n')
             
     
     # add to checklist
