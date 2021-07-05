@@ -16,21 +16,22 @@ def save_txt(file_name):
     # convert lang8 to text
     with open(file_name) as file:
         with open('data.txt', 'a') as write_file:
-            # write every text to data.txt
-            for j in dic["data"]:
-                text = j["text"]
+            lines = file.readlines()
+            data = []
+            for line in lines:
+                words = line.split('\t')
 
-                # correct the text
-                index_add = 0
-                for edit in j["edits"][0][1]:
-                    if edit[2] is None:
-                        text = text[:edit[0]+index_add] + text[edit[1]+index_add:]
-                        index_add -= (edit[1] - edit[0])
-                    else:
-                        text = text[:edit[0]+index_add] + edit[2] + text[edit[1]+index_add:]
-                        index_add += len(edit[2]) - (edit[1] - edit[0])
-                
-                write_file.write(text + '\n')
+                # no wrong word
+                if len(words) == 5:
+                    data.append(words[4].strip())
+                # has wrong word
+                elif len(words) >= 6:
+                    data.append(words[5].strip())
+            
+
+            for line in data:
+                write_file.write(line + '\n')
+            
     
     # add to checklist
     add_to_checklist(file_name)
