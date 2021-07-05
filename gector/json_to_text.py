@@ -4,18 +4,34 @@ import sys, json, os
 # python3 json_to_text.py [filename1] [filename2] ...
 # or python3 json_to_text.py folder [foldername]
 
-def save_txt(file_name):
-    # check if checklist exist
+# make if checklist do not exist
+def make_checklist():
     if not os.path.isfile('checklist.txt'):
         with open('checklist.txt', 'w') as file:
             pass
 
-    # check if already read
+# check if already read
+def is_read(file_name):
     with open('checklist.txt', 'r') as file:
         if (file_name + '\n') in file.readlines():
             print(file_name + ' already checked')
-            return
+            return True
+        else:
+            return False
 
+def add_to_checklist(file_name):
+    with open('checklist.txt', 'a') as file:
+        file.write(file_name + '\n')
+        print(file_name + ' added successfully')
+
+def save_txt(file_name):
+    # make if checklist do not exist
+    make_checklist()
+
+    # check if already read
+    if is_read(file_name):
+        return
+    
     # check json and edit if has error
     try:
         file = open(file_name)
@@ -62,9 +78,7 @@ def save_txt(file_name):
                 write_file.write(text + '\n')
     
     # add to checklist
-    with open('checklist.txt', 'a') as file:
-        file.write(file_name + '\n')
-        print(file_name + ' added successfully')
+    add_to_checklist(file_name)
 
 if __name__ == '__main__':
     print(sys.argv[1:])
