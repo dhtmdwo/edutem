@@ -1,0 +1,60 @@
+.body{
+      height: 100%;
+}
+.App {
+    width : 98%;
+}
+#inputPanel{
+    margin: 0.5%;
+    padding: 0.5%;
+    border: 2px solid #4CAF50;
+    height: 15vh;
+    width: 99%;
+    float: left;
+}
+#input{
+    margin: 0%;
+    padding: 1%;
+    border: 2px solid #4CAF50;
+    height: 95%;
+    width: 80%;
+    font-size: 12pt;
+    resize: none;
+    display: inline-block;
+}
+#apiPanel{
+    margin: 0.5%;
+    padding: 0.5%;
+    border: 2px solid #4CAF50;
+    height: 70vh;
+    width: 99%;
+    white-space: pre-wrap;
+    float: left;
+}
+#buttonPanel{
+    margin-right: 5%;
+    width: 15%;
+    float: right;
+
+}
+
+.apis{
+    margin: 0.5%;
+    width: 30%;
+    padding : 1%;
+    height: 45%;
+    border: 2px solid #4CAF50;
+    white-space: pre-wrap;
+    overflow-y: auto;
+    float: left;
+}
+.correction{
+    margin: 2%;
+    padding: 2%;
+    height: 20vh;
+    border: 2px solid #4CAF50;
+}
+.wrong{
+    color : red;
+    font-style: bold;
+}
